@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./estilos.css">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1 class="titulo">Quais tarefas desejas planejar?</h1>
+    <form class="formulario">
+        <label for="tarefa"> </label>
+        <input type="text" id="tarefa" placeholder="Digite uma nova Tarefa: ">
+        <button type="button" id="btn" onclick="adicionarTarefa()">+</button>
+    </form>
+    <div>
+        <h2 id="porcentagem">0%</h2>
+    </div>
+    <div class="lista-contaniner">
+        <ul id="lista">
+        </ul>
+    </div>
+    <script>
+        let totalTarefas = 0;
+        let tarefasConcluidas = 0;
+
+    function adicionarTarefa() {
+    let tarefa = document.getElementById("tarefa").value;
+    if (tarefa !== "") {
+        let lista = document.getElementById("lista");
+        let item = document.createElement("li");
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.onchange = atualizarPorcentagem;
+        item.appendChild(checkbox);
+        item.appendChild(document.createTextNode(tarefa));
+        lista.appendChild(item);
+        totalTarefas++;
+        atualizarPorcentagem();
+    }
+}
+
+    function atualizarPorcentagem() {
+    let checkboxes = document.querySelectorAll("#lista input[type=checkbox]");
+    tarefasConcluidas = 0;
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            tarefasConcluidas++;
+        }
+    }
+    let porcentagem = (tarefasConcluidas / totalTarefas) * 100;
+    document.getElementById("porcentagem").textContent = porcentagem.toFixed(0) + "%";
+}
+</script>
+</body>
